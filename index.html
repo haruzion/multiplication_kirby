@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九九れんしゅう</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /**
+         * スーファミ風スタイル
+         */
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #4a4a4a 25%, transparent 25%, transparent 75%, #4a4a4a 75%, #4a4a4a),
+                        linear-gradient(45deg, #4a4a4a 25%, transparent 25%, transparent 75%, #4a4a4a 75%, #4a4a4a);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            background-color: #303030;
+        }
+
+        .container {
+            background: linear-gradient(180deg, #663366 0%, #330033 50%, #1a001a 100%);
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.9);
+            text-align: center;
+            max-width: 600px;
+            width: 95%;
+            margin: 10px;
+            border: 8px outset #9966cc;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #ffff00;
+            font-size: 24px;
+            text-shadow: 2px 2px 0 #333, 4px 4px 0 #000;
+            letter-spacing: 2px;
+        }
+
+        /* モード選択 */
+        .mode-select {
+            margin: 20px 0;
+        }
+
+        .mode-select.hide {
+            display: none;
+        }
+
+        .mode-select > div:first-child {
+            color: #ffff00;
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .mode-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            padding: 12px 20px;
+            margin: 8px;
+            border: 4px outset #aaaaff;
+            cursor: pointer;
+            background: linear-gradient(180deg, #6666ff 0%, #0000cc 100%);
+            color: #ffff00;
+            width: 90%;
+            max-width: 350px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .mode-btn:active {
+            border-style: inset;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .time-attack-btn {
+            border-color: #ff6666;
+            background: linear-gradient(180deg, #ff3333 0%, #990000 100%);
+            margin-top: 10px;
+            width: 90%;
+            max-width: 350px;
+        }
+
+        .gourmet-btn {
+            border-color: #ffaa33;
+            background: linear-gradient(180deg, #ff8833 0%, #bb5500 100%);
+            margin-top: 5px;
+            width: 90%;
+            max-width: 350px;
+        }
+
+        /* 段選択 */
+        .dan-select {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .dan-select.show {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .dan-select > div:first-child {
+            grid-column: 1 / -1;
+            color: #ffff00;
+            font-size: 12px;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .dan-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            padding: 12px;
+            border: 4px outset #99ff99;
+            cursor: pointer;
+            background: linear-gradient(180deg, #66ff66 0%, #00aa00 100%);
+            color: #000;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .dan-btn:active {
+            border-style: inset;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        /* ゲームエリア */
+        .game-area {
+            display: none;
+        }
+
+        .game-area.show {
+            display: block;
+        }
+
+        /* グルメレースエリア */
+        .gourmet-area {
+            display: none;
+        }
+
+        .gourmet-area.show {
+            display: block;
+        }
+
+        .race-container {
+            background: linear-gradient(180deg, #3366cc 0%, #1a4d99 100%);
+            border: 4px solid #0066ff;
+            border-radius: 0;
+            padding: 20px;
+            margin: 15px 0;
+            position: relative;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        .race-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .character-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            color: #ffff00;
+            min-width: 80px;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .character-display-race {
+            font-size: 14px;
+            line-height: 1.1;
+            font-family: monospace;
+            min-width: 50px;
+        }
+
+        .position-bar {
+            flex: 1;
+            height: 30px;
+            background: #000;
+            border: 2px solid #666;
+            position: relative;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .position-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease-out;
+        }
+
+        .player-fill {
+            background: linear-gradient(90deg, #00ff00 0%, #00aa00 100%);
+        }
+
+        .dedede-fill {
+            background: linear-gradient(90deg, #ff6666 0%, #cc0000 100%);
+        }
+
+        .food-lane {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 2px solid #ffff00;
+            border-bottom: 2px solid #ffff00;
+            overflow: hidden;
+            transform: translateY(-50%);
+        }
+
+        .food-item {
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            padding: 5px 10px;
+            background: linear-gradient(180deg, #ff8844 0%, #cc5500 100%);
+            border: 2px solid #ffaa66;
+            border-radius: 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: #000;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: moveFood linear forwards;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+        }
+
+        @keyframes moveFood {
+            0% { left: 100%; }
+            100% { left: -100px; }
+        }
+
+        /* グルメレーススコア */
+        .gourmet-score-area {
+            background: linear-gradient(180deg, #ff6600 0%, #cc3300 100%);
+            color: #ffff00;
+            padding: 12px;
+            margin: 15px 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            border: 4px solid #ff9900;
+            display: flex;
+            justify-content: space-around;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .correct-count, .combo-count {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* グルメレース問題 */
+        .gourmet-question {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            margin: 15px 0;
+            color: #ffff00;
+            text-shadow: 2px 2px 0 #333;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 数字パッド */
+        .number-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .number-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            padding: 15px;
+            border: 4px outset #ffaa00;
+            background: linear-gradient(180deg, #0066ff 0%, #003388 100%);
+            color: #ffff00;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .number-btn:active {
+            border-style: inset;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .number-btn.correct {
+            background: linear-gradient(180deg, #00ff00 0%, #00aa00 100%);
+            color: #000;
+            border-color: #00ff00;
+        }
+
+        .number-btn.incorrect {
+            background: linear-gradient(180deg, #ff0000 0%, #aa0000 100%);
+            color: #ffff00;
+            border-color: #ff0000;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 15px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            border: 4px outset #ffaa66;
+            background: linear-gradient(180deg, #ff9933 0%, #cc6600 100%);
+            color: #000;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .back-btn:active {
+            border-style: inset;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        /* ポケモンバトルエリア */
+        .battle-area {
+            background: linear-gradient(180deg, #6699cc 0%, #3366aa 100%);
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            min-height: 250px;
+            border: 4px solid #0066cc;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .enemy-pokemon {
+            text-align: right;
+            margin-bottom: 80px;
+        }
+
+        .player-pokemon {
+            text-align: left;
+        }
+
+        .pokemon-name {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffff00;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .hp-bar-container {
+            display: inline-block;
+            background: #333;
+            border: 3px solid #666;
+            padding: 5px 10px;
+            margin: 5px 0;
+        }
+
+        .hp-label {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            font-weight: bold;
+            color: #ffff00;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .hp-bar {
+            display: inline-block;
+            width: 150px;
+            height: 20px;
+            background: #000;
+            overflow: hidden;
+            vertical-align: middle;
+            border: 2px solid #333;
+        }
+
+        .hp-fill {
+            height: 100%;
+            background: linear-gradient(to bottom, #00ff00, #00aa00);
+            transition: width 0.5s ease;
+        }
+
+        .hp-fill.player {
+            background: linear-gradient(to bottom, #ffaa00, #ff6600);
+        }
+
+        .pokemon-display {
+            font-size: 60px;
+            margin: 15px 0;
+            display: inline-block;
+            animation: pokemonIdle 2s ease-in-out infinite;
+        }
+
+        @keyframes pokemonIdle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .pokemon-display.attack {
+            animation: pokemonAttack 0.5s ease;
+        }
+
+        @keyframes pokemonAttack {
+            0% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(15px) scale(1.15); }
+            100% { transform: translateX(0) scale(1); }
+        }
+
+        .pokemon-display.damaged {
+            animation: pokemonDamage 0.5s ease;
+        }
+
+        @keyframes pokemonDamage {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-8px) rotate(-3deg); }
+            75% { transform: translateX(8px) rotate(3deg); }
+        }
+
+        /* キャラクター（ドット絵表現） */
+        .character-display {
+            font-size: 18px;
+            line-height: 1.2;
+            font-family: monospace;
+            display: inline-block;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .battle-message {
+            background: #000;
+            border: 3px solid #ffff00;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: #ffff00;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        /* スコア */
+        .score-area {
+            background: linear-gradient(180deg, #ff6600 0%, #cc3300 100%);
+            color: #ffff00;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            border: 4px solid #ff9900;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .score-number {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+
+        /* 問題 */
+        .question {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            margin: 20px 0;
+            color: #ffff00;
+            text-shadow: 2px 2px 0 #333;
+        }
+
+        /* 選択肢 */
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .choice-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            padding: 20px;
+            border: 4px outset #ffaa00;
+            cursor: pointer;
+            background: linear-gradient(180deg, #0066ff 0%, #003388 100%);
+            color: #ffff00;
+            transition: all 0.3s;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .choice-btn:active {
+            border-style: inset;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .choice-btn.correct {
+            background: linear-gradient(180deg, #00ff00 0%, #00aa00 100%);
+            color: #000;
+            border-color: #00ff00;
+        }
+
+        .choice-btn.incorrect {
+            background: linear-gradient(180deg, #ff0000 0%, #aa0000 100%);
+            color: #ffff00;
+            border-color: #ff0000;
+        }
+
+        /* 結果表示 */
+        .result {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            margin: 20px 0;
+            min-height: 30px;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .correct {
+            color: #00ffff;
+        }
+
+        .incorrect {
+            color: #ff66ff;
+        }
+
+        .emoji {
+            font-size: 36px;
+            margin: 10px 0;
+        }
+
+        /* アニメーション */
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .bounce {
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        /* タイムアタック用の時間表示 */
+        .time-display {
+            background: linear-gradient(180deg, #ff3333 0%, #990000 100%);
+            color: #ffff00;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            font-weight: bold;
+            border: 4px solid #ff6666;
+            text-shadow: 1px 1px 0 #333;
+        }
+
+        .time-label {
+            font-size: 10px;
+        }
+
+        .time-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        /* ゲーム終了画面 */
+        .game-over-area {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .game-over-area.show {
+            display: flex;
+        }
+
+        .game-over-content {
+            background: linear-gradient(180deg, #663366 0%, #330033 100%);
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            border: 8px solid #ffff00;
+        }
+
+        .game-over-content h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            margin: 0 0 20px 0;
+            color: #ffff00;
+            text-shadow: 2px 2px 0 #333;
+        }
+
+        .game-over-score {
+            background: linear-gradient(180deg, #ff6600 0%, #cc3300 100%);
+            color: #ffff00;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            border: 4px solid #ff9900;
+        }
+
+        .defeated-count {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .high-score-section {
+            background: linear-gradient(180deg, #0066ff 0%, #003388 100%);
+            padding: 15px;
+            margin: 15px 0;
+            border: 3px solid #0099ff;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .high-score-label {
+            font-size: 12px;
+            color: #ffff00;
+        }
+
+        .high-score-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffff00;
+            margin: 5px 0;
+        }
+
+        .is-new-record {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ffff00;
+            margin: 15px 0;
+            animation: bounce 0.5s ease infinite;
+            text-shadow: 2px 2px 0 #ff0000;
+        }
+
+        .game-over-btn {
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(180deg, #66ff66 0%, #00aa00 100%);
+            color: #000;
+            border: 4px outset #99ff99;
+            padding: 15px 30px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .game-over-btn:active {
+            border-style: inset;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        /* レスポンシブ対応 */
+        @media (min-width: 768px) {
+            .container {
+                padding: 40px;
+            }
+            h1 {
+                font-size: 28px;
+            }
+            .question {
+                font-size: 28px;
+            }
+            .choice-btn {
+                font-size: 16px;
+            }
+            .emoji {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>九九れんしゅう</h1>
+        
+        <div class="mode-select" id="modeSelect">
+            <div>モードをえらんでね</div>
+            <button class="mode-btn" onclick="selectMode('random')">ぜんぶ (一〜九のだん)</button>
+            <button class="mode-btn" onclick="selectMode('practice')">れんしゅうモード</button>
+            <button class="mode-btn time-attack-btn" onclick="selectMode('timeattack')">⏱ タイムアタック（1ぷん）</button>
+            <button class="mode-btn gourmet-btn" onclick="selectMode('gourmet')">🍕 グルメレース</button>
+        </div>
+        
+        <div class="dan-select" id="danSelect">
+            <div>どのだんをれんしゅうする？</div>
+            <button class="dan-btn" onclick="selectDan(2)">二のだん</button>
+            <button class="dan-btn" onclick="selectDan(3)">三のだん</button>
+            <button class="dan-btn" onclick="selectDan(4)">四のだん</button>
+            <button class="dan-btn" onclick="selectDan(5)">五のだん</button>
+            <button class="dan-btn" onclick="selectDan(6)">六のだん</button>
+            <button class="dan-btn" onclick="selectDan(7)">七のだん</button>
+            <button class="dan-btn" onclick="selectDan(8)">八のだん</button>
+            <button class="dan-btn" onclick="selectDan(9)">九のだん</button>
+        </div>
+        
+        <div class="game-area" id="gameArea">
+            <button class="back-btn" onclick="backToMenu()">← メニューにもどる</button>
+            
+            <!-- タイムアタック用の時間表示 -->
+            <div class="time-display" id="timeDisplay" style="display: none;">
+                <div class="time-label">のこり</div>
+                <div class="time-number" id="timeNumber">60</div>
+                <div>びょう</div>
+            </div>
+            
+            <!-- ポケモンバトルエリア -->
+            <div class="battle-area">
+                <div class="enemy-pokemon">
+                    <div class="pokemon-name" id="enemyName">あいてのキャラ</div>
+                    <div class="hp-bar-container">
+                        <div class="hp-label">HP</div>
+                        <div class="hp-bar">
+                            <div class="hp-fill" id="enemyHP" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="pokemon-display" id="enemyDisplay">�🟥🟥🟥<br>🟥⬜⬜🟥<br>🟥🟥🟥🟥<br>🟥🟥🟥🟥</div>
+                </div>
+                
+                <div class="player-pokemon">
+                    <div class="pokemon-name" id="playerName">あなたのキャラ</div>
+                    <div class="hp-bar-container">
+                        <div class="hp-label">HP</div>
+                        <div class="hp-bar">
+                            <div class="hp-fill player" id="playerHP" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div class="pokemon-display" id="playerDisplay">🟥🟥🟥🟥<br>🟥⬜⬜🟥<br>🟥🟥🟥🟥<br>🟥🟥🟥🟥</div>
+                </div>
+            </div>
+            
+            <div class="battle-message" id="battleMessage">バトルがはじまる！</div>
+            
+            <!-- スコア表示 -->
+            <div class="score-area">
+                <div>れんぞくただしかい</div>
+                <div class="score-number" id="score">0</div>
+            </div>
+            
+            <!-- 問題表示 -->
+            <div class="question" id="question">問題</div>
+            
+            <!-- 選択肢 -->
+            <div class="choices" id="choices"></div>
+            
+            <!-- 結果表示 -->
+            <div class="emoji" id="emoji"></div>
+            <div class="result" id="result"></div>
+        </div>
+
+        <!-- グルメレースエリア -->
+        <div class="gourmet-area" id="gourmetArea">
+            <button class="back-btn" onclick="backToMenu()">← メニューにもどる</button>
+            
+            <!-- レース画面 -->
+            <div class="race-container">
+                <!-- デデデ大王 -->
+                <div class="race-player dedede-player">
+                    <div class="character-name">デデデ大王</div>
+                    <div class="character-display-race">🟥🟥🟥🟥<br>🟥⬜⬜🟥<br>🟥🟥🟥🟥<br>🟥🟥🟥🟥</div>
+                    <div class="position-bar dedede-position">
+                        <div class="position-fill dedede-fill" id="dededePosition"></div>
+                    </div>
+                </div>
+                
+                <!-- カービィ -->
+                <div class="race-player player">
+                    <div class="character-name">カービィ</div>
+                    <div class="character-display-race">🟥🟥🟥🟥<br>🟥⬜⬜🟥<br>🟥🟥🟥🟥<br>🟥🟥🟥🟥</div>
+                    <div class="position-bar player-position">
+                        <div class="position-fill player-fill" id="playerPosition"></div>
+                    </div>
+                </div>
+                
+                <!-- 流れてくる食べ物エリア -->
+                <div class="food-lane" id="foodLane"></div>
+            </div>
+            
+            <!-- スコア表示 -->
+            <div class="gourmet-score-area">
+                <div class="correct-count">
+                    <span>ただしかい:</span>
+                    <span id="gourmetCorrect">0</span>
+                </div>
+                <div class="combo-count">
+                    <span>れんぞく:</span>
+                    <span id="gourmetCombo">0</span>
+                </div>
+            </div>
+            
+            <!-- 問題表示 -->
+            <div class="gourmet-question" id="gourmetQuestion">問題を待機中...</div>
+            
+            <!-- 選択肢 -->
+            <div class="choices" id="gourmetChoices"></div>
+            
+            <!-- 数字入力ボタン -->
+            <div class="number-pad" id="numberPad"></div>
+            
+            <!-- 結果表示 -->
+            <div class="emoji" id="gourmetEmoji"></div>
+            <div class="result" id="gourmetResult"></div>
+        </div>
+        
+        <!-- ゲーム終了画面（タイムアタック） -->
+        <div class="game-over-area" id="gameOverArea">
+            <div class="game-over-content">
+                <h2>ゲームオーバー！</h2>
+                <div class="result" id="result"></div>
+                <div class="game-over-score" id="gameOverScore">
+                    <div>1ぷん間で</div>
+                    <div class="defeated-count" id="defeatedCount">0</div>
+                    <div>ひきたおした！</div>
+                </div>
+                <div class="high-score-section" id="highScoreSection" style="display: none;">
+                    <div class="high-score-label">はいすこあ</div>
+                    <div class="high-score-number" id="highScoreNumber">0</div>
+                </div>
+                <div class="is-new-record" id="isNewRecord" style="display: none;">
+                    🎉 あたらしいきろく！🎉
+                </div>
+                <button class="game-over-btn" onclick="backToMenu()">メニューにもどる</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * ゲームロジック
+         */
+
+        /**
+         * ゲームクラス
+         */
+        class Game {
+            constructor() {
+                this.num1 = 0;
+                this.num2 = 0;
+                this.correctAnswer = 0;
+                this.currentMode = null;
+                this.practiceDan = null;
+                this.score = 0;
+                this.playerHP = 100;
+                this.enemyHP = 100;
+                this.enemyMaxHP = 100;
+                this.timeLeft = 60;
+                this.enemiesDefeated = 0;
+                // グルメレース用
+                this.playerPosition = 0;
+                this.dededePosition = 0;
+                this.gourmetCorrect = 0;
+                this.gourmetCombo = 0;
+                this.currentFood = null;
+            }
+
+            setMode(mode) {
+                this.currentMode = mode;
+                this.score = 0;
+                this.playerHP = 100;
+                this.enemyHP = 100;
+                this.timeLeft = 60;
+                this.enemiesDefeated = 0;
+                this.playerPosition = 0;
+                this.dededePosition = 0;
+                this.gourmetCorrect = 0;
+                this.gourmetCombo = 0;
+            }
+
+            setPracticeDan(dan) {
+                if (dan < 2 || dan > 9) {
+                    throw new Error('Dan must be between 2 and 9');
+                }
+                this.practiceDan = dan;
+                this.score = 0;
+                this.playerHP = 100;
+                this.enemyHP = 100;
+            }
+
+            setEnemyMaxHP(hp) {
+                this.enemyMaxHP = hp;
+                this.enemyHP = hp;
+            }
+
+            generateQuestion() {
+                if (this.practiceDan) {
+                    this.num1 = this.practiceDan;
+                    this.num2 = getRandomInt(1, 9);
+                } else {
+                    this.num1 = getRandomInt(1, 9);
+                    this.num2 = getRandomInt(1, 9);
+                }
+                
+                this.correctAnswer = this.num1 * this.num2;
+                
+                return {
+                    num1: this.num1,
+                    num2: this.num2,
+                    answer: this.correctAnswer
+                };
+            }
+
+            generateChoices() {
+                const choices = [this.correctAnswer];
+                const maxAttempts = 100;
+                let attempts = 0;
+                
+                while (choices.length < 4 && attempts < maxAttempts) {
+                    attempts++;
+                    const offset = getRandomInt(-5, 5);
+                    const wrongAnswer = this.correctAnswer + offset;
+                    
+                    if (wrongAnswer > 0 && 
+                        wrongAnswer <= 9 * 9 && 
+                        !choices.includes(wrongAnswer)) {
+                        choices.push(wrongAnswer);
+                    }
+                }
+                
+                while (choices.length < 4) {
+                    const randomChoice = getRandomInt(1, 9 * 9);
+                    if (!choices.includes(randomChoice)) {
+                        choices.push(randomChoice);
+                    }
+                }
+                
+                return shuffleArray(choices);
+            }
+
+            checkAnswer(userAnswer) {
+                const isCorrect = userAnswer === this.correctAnswer;
+                
+                if (isCorrect) {
+                    this.score++;
+                    const damage = getRandomInt(15, 25);
+                    this.enemyHP = Math.max(0, this.enemyHP - damage);
+                    return { isCorrect: true, damage, target: 'enemy' };
+                } else {
+                    this.score = 0;
+                    const damage = getRandomInt(10, 20);
+                    this.playerHP = Math.max(0, this.playerHP - damage);
+                    return { isCorrect: false, damage, target: 'player' };
+                }
+            }
+
+            isEnemyDefeated() {
+                return this.enemyHP <= 0;
+            }
+
+            isPlayerDefeated() {
+                return this.playerHP <= 0;
+            }
+
+            resetEnemy(hp) {
+                this.enemyMaxHP = hp;
+                this.enemyHP = hp;
+            }
+
+            incrementEnemiesDefeated() {
+                this.enemiesDefeated++;
+                return this.enemiesDefeated;
+            }
+
+            getEnemiesDefeated() {
+                return this.enemiesDefeated;
+            }
+
+            decrementTime() {
+                this.timeLeft = Math.max(0, this.timeLeft - 1);
+                return this.timeLeft;
+            }
+
+            getTimeLeft() {
+                return this.timeLeft;
+            }
+
+            resetPlayerHP() {
+                this.playerHP = 100;
+            }
+
+            getPlayerHPPercent() {
+                return this.playerHP;
+            }
+
+            getEnemyHPPercent() {
+                return (this.enemyHP / this.enemyMaxHP) * 100;
+            }
+
+            getScore() {
+                return this.score;
+            }
+
+            getCorrectAnswer() {
+                return this.correctAnswer;
+            }
+
+            // グルメレース用メソッド
+            generateGourmetFood() {
+                const food = getRandomElement(GOURMET_FOODS);
+                const quantity = getRandomInt(1, 9);
+                this.currentFood = {
+                    name: food.name,
+                    point: food.point,
+                    quantity: quantity,
+                    answer: food.point * quantity
+                };
+                return this.currentFood;
+            }
+
+            generateGourmetChoices() {
+                if (!this.currentFood) return [];
+                
+                const correctAnswer = this.currentFood.answer;
+                const choices = [correctAnswer];
+                const maxAttempts = 100;
+                let attempts = 0;
+                
+                while (choices.length < 4 && attempts < maxAttempts) {
+                    attempts++;
+                    const offset = getRandomInt(-10, 10);
+                    const wrongAnswer = correctAnswer + offset;
+                    
+                    if (wrongAnswer > 0 && 
+                        wrongAnswer !== correctAnswer &&
+                        !choices.includes(wrongAnswer)) {
+                        choices.push(wrongAnswer);
+                    }
+                }
+                
+                while (choices.length < 4) {
+                    const randomChoice = getRandomInt(1, 100);
+                    if (!choices.includes(randomChoice)) {
+                        choices.push(randomChoice);
+                    }
+                }
+                
+                const shuffled = shuffleArray(choices);
+                console.log('正解:', correctAnswer, '選択肢:', shuffled);
+                return shuffled;
+            }
+
+            updatePlayerPosition(distance) {
+                this.playerPosition = Math.min(100, this.playerPosition + distance);
+            }
+
+            updateDededePosition(distance) {
+                this.dededePosition = Math.min(100, this.dededePosition + distance);
+            }
+
+            getPlayerPosition() {
+                return this.playerPosition;
+            }
+
+            getDededePosition() {
+                return this.dededePosition;
+            }
+
+            incrementGourmetCorrect() {
+                this.gourmetCorrect++;
+                this.gourmetCombo++;
+            }
+
+            resetGourmetCombo() {
+                this.gourmetCombo = 0;
+            }
+
+            getGourmetCorrect() {
+                return this.gourmetCorrect;
+            }
+
+            getGourmetCombo() {
+                return this.gourmetCombo;
+            }
+
+            reset() {
+                this.num1 = 0;
+                this.num2 = 0;
+                this.correctAnswer = 0;
+                this.currentMode = null;
+                this.practiceDan = null;
+                this.score = 0;
+                this.playerHP = 100;
+                this.enemyHP = 100;
+                this.enemyMaxHP = 100;
+                this.playerPosition = 0;
+                this.dededePosition = 0;
+                this.gourmetCorrect = 0;
+                this.gourmetCombo = 0;
+                this.currentFood = null;
+            }
+        }
+
+        /**
+         * ユーティリティ関数
+         */
+
+        /**
+         * 指定範囲のランダムな整数を生成
+         */
+        function getRandomInt(min, max) {
+            if (min > max) {
+                throw new Error('min must be less than or equal to max');
+            }
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        /**
+         * 配列からランダムな要素を取得
+         */
+        function getRandomElement(array) {
+            if (!Array.isArray(array) || array.length === 0) {
+                throw new Error('Array must be non-empty');
+            }
+            return array[getRandomInt(0, array.length - 1)];
+        }
+
+        /**
+         * 配列をシャッフル（Fisher-Yatesアルゴリズム）
+         */
+        function shuffleArray(array) {
+            if (!Array.isArray(array)) {
+                throw new Error('Input must be an array');
+            }
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        /**
+         * 指定時間待機
+         */
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        /**
+         * 定数定義
+         */
+
+        // ゲームモード
+        const GameMode = {
+            RANDOM: 'random',
+            PRACTICE: 'practice',
+            TIMEATTACK: 'timeattack',
+            GOURMET: 'gourmet'
+        };
+
+        // ほめ言葉
+        const PRAISE_WORDS = [
+            { emoji: '🎉', text: 'すごい！' },
+            { emoji: '⭐', text: 'よくできました！' },
+            { emoji: '🌟', text: 'すばらしい！' },
+            { emoji: '👏', text: 'かんぺき！' },
+            { emoji: '✨', text: 'さすが！' },
+            { emoji: '🎊', text: 'やったね！' },
+            { emoji: '💯', text: 'パーフェクト！' },
+            { emoji: '🏆', text: 'すてき！' }
+        ];
+
+        // はげましの言葉
+        const ENCOURAGE_WORDS = [
+            { emoji: '💪', text: 'つぎもがんばろう！' },
+            { emoji: '😊', text: 'おしい！もう一ど！' },
+            { emoji: '🌈', text: 'だいじょうぶ！' },
+            { emoji: '🌸', text: 'つぎはできる！' }
+        ];
+
+        // ポケモン定義
+        const PLAYER_POKEMONS = [
+            { name: 'カービィ', type: 'ピンク', hp: 100, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
+            { name: 'メタナイト', type: 'くろ', hp: 120, dotImage: '⬛⬛⬛⬛\n⬛🟦🟦⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛' },
+            { name: 'デデデ大王', type: 'ベニ', hp: 140, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
+            { name: 'ワドルディ', type: 'あか', hp: 90, dotImage: '🟨🟨🟨🟨\n🟨⬜⬜🟨\n🟨🟨🟨🟨\n🟨🟨🟨🟨' }
+        ];
+
+        const ENEMY_POKEMONS = [
+            { name: 'カービィ', type: 'ピンク', hp: 100, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
+            { name: 'メタナイト', type: 'くろ', hp: 130, dotImage: '⬛⬛⬛⬛\n⬛🟦🟦⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛' },
+            { name: 'デデデ大王', type: 'ベニ', hp: 150, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
+            { name: 'ワドルディ', type: 'あか', hp: 110, dotImage: '🟨🟨🟨🟨\n🟨⬜⬜🟨\n🟨🟨🟨🟨\n🟨🟨🟨🟨' },
+            { name: 'ワドルディ（緑）', type: 'みどり', hp: 100, dotImage: '🟩🟩🟩🟩\n🟩⬜⬜🟩\n🟩🟩🟩🟩\n🟩🟩🟩🟩' }
+        ];
+
+        // グルメレース用の食べ物定義
+        const GOURMET_FOODS = [
+            { name: 'マキシムトマト', point: 5 },
+            { name: 'ワドルディ', point: 3 },
+            { name: 'ゴールドクッキー', point: 10 },
+            { name: 'さくらんぼ', point: 2 },
+            { name: 'スイートポテト', point: 4 },
+            { name: 'ドーナツ', point: 6 },
+            { name: 'ケーキ', point: 8 },
+            { name: 'アイスクリーム', point: 7 }
+        ];
+
+        /**
+         * UIマネージャークラス
+         */
+        class UIManager {
+            constructor() {
+                this.elements = this.getElements();
+                this.currentPlayerPokemon = null;
+                this.currentEnemyPokemon = null;
+            }
+
+            getElements() {
+                return {
+                    MODE_SELECT: document.getElementById('modeSelect'),
+                    DAN_SELECT: document.getElementById('danSelect'),
+                    GAME_AREA: document.getElementById('gameArea'),
+                    QUESTION: document.getElementById('question'),
+                    CHOICES: document.getElementById('choices'),
+                    SCORE: document.getElementById('score'),
+                    EMOJI: document.getElementById('emoji'),
+                    RESULT: document.getElementById('result'),
+                    PLAYER_DISPLAY: document.getElementById('playerDisplay'),
+                    ENEMY_DISPLAY: document.getElementById('enemyDisplay'),
+                    PLAYER_HP: document.getElementById('playerHP'),
+                    ENEMY_HP: document.getElementById('enemyHP'),
+                    PLAYER_NAME: document.getElementById('playerName'),
+                    ENEMY_NAME: document.getElementById('enemyName'),
+                    BATTLE_MESSAGE: document.getElementById('battleMessage'),
+                    TIME_DISPLAY: document.getElementById('timeDisplay'),
+                    TIME_NUMBER: document.getElementById('timeNumber'),
+                    GAME_OVER_AREA: document.getElementById('gameOverArea'),
+                    GAME_OVER_SCORE: document.getElementById('gameOverScore'),
+                    DEFEATED_COUNT: document.getElementById('defeatedCount'),
+                    HIGH_SCORE_SECTION: document.getElementById('highScoreSection'),
+                    HIGH_SCORE_NUMBER: document.getElementById('highScoreNumber'),
+                    IS_NEW_RECORD: document.getElementById('isNewRecord'),
+                    // グルメレース用
+                    GOURMET_AREA: document.getElementById('gourmetArea'),
+                    PLAYER_POSITION: document.getElementById('playerPosition'),
+                    DEDEDE_POSITION: document.getElementById('dededePosition'),
+                    FOOD_LANE: document.getElementById('foodLane'),
+                    GOURMET_QUESTION: document.getElementById('gourmetQuestion'),
+                    GOURMET_CORRECT: document.getElementById('gourmetCorrect'),
+                    GOURMET_COMBO: document.getElementById('gourmetCombo'),
+                    GOURMET_CHOICES: document.getElementById('gourmetChoices'),
+                    NUMBER_PAD: document.getElementById('numberPad'),
+                    GOURMET_EMOJI: document.getElementById('gourmetEmoji'),
+                    GOURMET_RESULT: document.getElementById('gourmetResult')
+                };
+            }
+
+            hideModeSelect() {
+                this.elements.MODE_SELECT?.classList.add('hide');
+            }
+
+            showDanSelect() {
+                this.elements.DAN_SELECT?.classList.add('show');
+            }
+
+            hideDanSelect() {
+                this.elements.DAN_SELECT?.classList.remove('show');
+            }
+
+            showGameArea() {
+                this.elements.GAME_AREA?.classList.add('show');
+            }
+
+            hideGameArea() {
+                this.elements.GAME_AREA?.classList.remove('show');
+            }
+
+            updateScore(score) {
+                if (this.elements.SCORE) {
+                    this.elements.SCORE.textContent = score;
+                }
+            }
+
+            animateScore() {
+                const scoreElem = this.elements.SCORE;
+                if (scoreElem) {
+                    scoreElem.classList.add('bounce');
+                    setTimeout(() => {
+                        scoreElem.classList.remove('bounce');
+                    }, 500);
+                }
+            }
+
+            displayQuestion(num1, num2) {
+                if (this.elements.QUESTION) {
+                    this.elements.QUESTION.textContent = `${num1} × ${num2} = ?`;
+                }
+            }
+
+            displayChoices(choices, onSelect) {
+                const choicesDiv = this.elements.CHOICES;
+                if (!choicesDiv) return;
+
+                choicesDiv.innerHTML = '';
+                
+                choices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.textContent = choice;
+                    btn.onclick = () => onSelect(choice);
+                    choicesDiv.appendChild(btn);
+                });
+            }
+
+            displayCorrectResult() {
+                const praise = getRandomElement(PRAISE_WORDS);
+                
+                if (this.elements.EMOJI) {
+                    this.elements.EMOJI.textContent = praise.emoji;
+                }
+                
+                if (this.elements.RESULT) {
+                    this.elements.RESULT.textContent = praise.text;
+                    this.elements.RESULT.className = `result correct bounce`;
+                }
+            }
+
+            displayIncorrectResult() {
+                const encourage = getRandomElement(ENCOURAGE_WORDS);
+                
+                if (this.elements.EMOJI) {
+                    this.elements.EMOJI.textContent = encourage.emoji;
+                }
+                
+                if (this.elements.RESULT) {
+                    this.elements.RESULT.textContent = encourage.text;
+                    this.elements.RESULT.className = `result incorrect shake`;
+                }
+            }
+
+            highlightChoices(userAnswer, correctAnswer) {
+                const buttons = document.querySelectorAll('.choice-btn');
+                
+                buttons.forEach(btn => {
+                    btn.onclick = null;
+                    btn.style.cursor = 'default';
+                    
+                    const value = parseInt(btn.textContent);
+                    if (value === correctAnswer) {
+                        btn.classList.add('correct');
+                    } else if (value === userAnswer) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+            }
+
+            initializePokemon() {
+                this.currentPlayerPokemon = getRandomElement(PLAYER_POKEMONS);
+                this.currentEnemyPokemon = getRandomElement(ENEMY_POKEMONS);
+                
+                if (this.elements.PLAYER_DISPLAY) {
+                    this.elements.PLAYER_DISPLAY.innerHTML = `<div class="character-display">${this.currentPlayerPokemon.dotImage}</div>`;
+                }
+                if (this.elements.ENEMY_DISPLAY) {
+                    this.elements.ENEMY_DISPLAY.innerHTML = `<div class="character-display">${this.currentEnemyPokemon.dotImage}</div>`;
+                }
+                if (this.elements.PLAYER_NAME) {
+                    this.elements.PLAYER_NAME.textContent = this.currentPlayerPokemon.name;
+                }
+                if (this.elements.ENEMY_NAME) {
+                    this.elements.ENEMY_NAME.textContent = this.currentEnemyPokemon.name;
+                }
+                
+                return this.currentEnemyPokemon.hp;
+            }
+
+            updateHP(target, hpPercent) {
+                const hpElement = target === 'player' ? this.elements.PLAYER_HP : this.elements.ENEMY_HP;
+                if (hpElement) {
+                    hpElement.style.width = `${Math.max(0, hpPercent)}%`;
+                }
+            }
+
+            showBattleMessage(message) {
+                if (this.elements.BATTLE_MESSAGE) {
+                    this.elements.BATTLE_MESSAGE.textContent = message;
+                }
+            }
+
+            animateAttack(attacker) {
+                const element = attacker === 'player' ? this.elements.PLAYER_DISPLAY : this.elements.ENEMY_DISPLAY;
+                if (element) {
+                    element.classList.add('attack');
+                    setTimeout(() => element.classList.remove('attack'), 500);
+                }
+            }
+
+            animateDamage(target) {
+                const element = target === 'player' ? this.elements.PLAYER_DISPLAY : this.elements.ENEMY_DISPLAY;
+                if (element) {
+                    element.classList.add('damaged');
+                    setTimeout(() => element.classList.remove('damaged'), 500);
+                }
+            }
+
+            setNewEnemy() {
+                this.currentEnemyPokemon = getRandomElement(ENEMY_POKEMONS);
+                
+                if (this.elements.ENEMY_DISPLAY) {
+                    this.elements.ENEMY_DISPLAY.innerHTML = `<div class="character-display">${this.currentEnemyPokemon.dotImage}</div>`;
+                }
+                if (this.elements.ENEMY_NAME) {
+                    this.elements.ENEMY_NAME.textContent = this.currentEnemyPokemon.name;
+                }
+                
+                return this.currentEnemyPokemon.hp;
+            }
+
+            clearDisplay() {
+                if (this.elements.RESULT) {
+                    this.elements.RESULT.textContent = '';
+                    this.elements.RESULT.className = 'result';
+                }
+                if (this.elements.EMOJI) {
+                    this.elements.EMOJI.textContent = '';
+                }
+            }
+
+            showTimeDisplay() {
+                if (this.elements.TIME_DISPLAY) {
+                    this.elements.TIME_DISPLAY.style.display = 'block';
+                }
+            }
+
+            hideTimeDisplay() {
+                if (this.elements.TIME_DISPLAY) {
+                    this.elements.TIME_DISPLAY.style.display = 'none';
+                }
+            }
+
+            updateTime(timeLeft) {
+                if (this.elements.TIME_NUMBER) {
+                    this.elements.TIME_NUMBER.textContent = timeLeft;
+                }
+            }
+
+            showGameOver(defeatedCount, highScore, isNewRecord) {
+                if (this.elements.GAME_OVER_AREA) {
+                    this.elements.GAME_OVER_AREA.classList.add('show');
+                }
+                if (defeatedCount !== undefined && this.elements.DEFEATED_COUNT) {
+                    this.elements.DEFEATED_COUNT.textContent = defeatedCount;
+                }
+                if (highScore !== undefined && this.elements.HIGH_SCORE_SECTION) {
+                    this.elements.HIGH_SCORE_SECTION.style.display = 'block';
+                    if (this.elements.HIGH_SCORE_NUMBER) {
+                        this.elements.HIGH_SCORE_NUMBER.textContent = highScore;
+                    }
+                }
+                if (isNewRecord && this.elements.IS_NEW_RECORD) {
+                    this.elements.IS_NEW_RECORD.style.display = 'block';
+                } else if (this.elements.IS_NEW_RECORD) {
+                    this.elements.IS_NEW_RECORD.style.display = 'none';
+                }
+            }
+
+            hideGameOver() {
+                if (this.elements.GAME_OVER_AREA) {
+                    this.elements.GAME_OVER_AREA.classList.remove('show');
+                }
+                if (this.elements.HIGH_SCORE_SECTION) {
+                    this.elements.HIGH_SCORE_SECTION.style.display = 'none';
+                }
+            }
+
+            // グルメレース関連メソッド
+            showGourmetArea() {
+                if (this.elements.GOURMET_AREA) {
+                    this.elements.GOURMET_AREA.classList.add('show');
+                }
+            }
+
+            hideGourmetArea() {
+                if (this.elements.GOURMET_AREA) {
+                    this.elements.GOURMET_AREA.classList.remove('show');
+                }
+            }
+
+            updatePlayerPosition(percent) {
+                if (this.elements.PLAYER_POSITION) {
+                    this.elements.PLAYER_POSITION.style.width = percent + '%';
+                }
+            }
+
+            updateDededePosition(percent) {
+                if (this.elements.DEDEDE_POSITION) {
+                    this.elements.DEDEDE_POSITION.style.width = percent + '%';
+                }
+            }
+
+            displayGourmetQuestion(food) {
+                if (this.elements.GOURMET_QUESTION) {
+                    this.elements.GOURMET_QUESTION.textContent = 
+                        `${food.name}（${food.point}点）×${food.quantity}個 = ?`;
+                }
+            }
+
+            displayGourmetChoices(choices, onChoice) {
+                if (!this.elements.GOURMET_CHOICES) return;
+                this.elements.GOURMET_CHOICES.innerHTML = '';
+                choices.forEach((choice, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.textContent = choice;
+                    btn.onclick = () => onChoice(choice);
+                    this.elements.GOURMET_CHOICES.appendChild(btn);
+                });
+            }
+
+            updateGourmetStats(correct, combo) {
+                if (this.elements.GOURMET_CORRECT) {
+                    this.elements.GOURMET_CORRECT.textContent = correct;
+                }
+                if (this.elements.GOURMET_COMBO) {
+                    this.elements.GOURMET_COMBO.textContent = combo;
+                }
+            }
+
+            createNumberPad(onNumberClick) {
+                if (!this.elements.NUMBER_PAD) return;
+                this.elements.NUMBER_PAD.innerHTML = '';
+                for (let i = 0; i <= 9; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = 'number-btn';
+                    btn.textContent = i;
+                    btn.onclick = () => onNumberClick(i);
+                    this.elements.NUMBER_PAD.appendChild(btn);
+                }
+            }
+
+            displayGourmetResult(isCorrect, emoji) {
+                if (this.elements.GOURMET_EMOJI && emoji) {
+                    this.elements.GOURMET_EMOJI.textContent = emoji;
+                    this.elements.GOURMET_EMOJI.style.display = 'block';
+                    setTimeout(() => {
+                        this.elements.GOURMET_EMOJI.style.display = 'none';
+                    }, 500);
+                }
+            }
+
+            clearGameOverDisplay() {
+                if (this.elements.RESULT) {
+                    this.elements.RESULT.textContent = '';
+                }
+                if (this.elements.DEFEATED_COUNT) {
+                    this.elements.DEFEATED_COUNT.textContent = '0';
+                }
+                if (this.elements.HIGH_SCORE_SECTION) {
+                    this.elements.HIGH_SCORE_SECTION.style.display = 'none';
+                }
+                if (this.elements.IS_NEW_RECORD) {
+                    this.elements.IS_NEW_RECORD.style.display = 'none';
+                }
+                if (this.elements.GAME_OVER_SCORE) {
+                    this.elements.GAME_OVER_SCORE.innerHTML = '<div>1ぷん間で</div><div class="defeated-count" id="defeatedCount">0</div><div>ひきたおした！</div>';
+                }
+            }
+        }
+
+        /**
+         * アプリケーションクラス
+         */
+        class App {
+            constructor() {
+                this.game = new Game();
+                this.ui = new UIManager();
+                this.timerInterval = null;
+            }
+
+            init() {
+                window.selectMode = this.selectMode.bind(this);
+                window.selectDan = this.selectDan.bind(this);
+                window.backToMenu = this.backToMenu.bind(this);
+                
+                // 初期画面表示設定
+                this.ui.hideGameArea();
+                this.ui.hideDanSelect();
+                this.ui.hideTimeDisplay();
+                this.ui.hideGameOver();
+                this.ui.hideGourmetArea();
+                if (this.ui.elements.MODE_SELECT) {
+                    this.ui.elements.MODE_SELECT.classList.remove('hide');
+                }
+            }
+
+            selectMode(mode) {
+                try {
+                    console.log('selectMode called with mode:', mode);
+                    this.game.setMode(mode);
+                    this.ui.updateScore(0);
+                    this.ui.hideDanSelect();
+                    this.ui.hideModeSelect();
+                    this.ui.hideTimeDisplay();
+                    this.ui.hideGameOver();
+                    
+                    if (mode === GameMode.RANDOM) {
+                        this.game.practiceDan = null;
+                        this.ui.showGameArea();
+                        this.initializeBattle();
+                        this.startNewQuestion();
+                    } else if (mode === GameMode.PRACTICE) {
+                        this.ui.showDanSelect();
+                        this.ui.hideGameArea();
+                    } else if (mode === GameMode.TIMEATTACK) {
+                        this.game.practiceDan = null;
+                        this.ui.showGameArea();
+                        this.ui.showTimeDisplay();
+                        this.initializeBattle();
+                        this.startNewQuestion();
+                        this.startTimer();
+                    } else if (mode === GameMode.GOURMET) {
+                        this.ui.hideGameArea();
+                        this.ui.showGourmetArea();
+                        this.startGourmetRace();
+                    }
+                } catch (error) {
+                    console.error('Error in selectMode:', error);
+                }
+            }
+
+            selectDan(dan) {
+                try {
+                    console.log('selectDan called with dan:', dan);
+                    this.game.setPracticeDan(dan);
+                    this.ui.updateScore(0);
+                    this.ui.hideDanSelect();
+                    this.ui.showGameArea();
+                    this.initializeBattle();
+                    this.startNewQuestion();
+                } catch (error) {
+                    console.error('Error in selectDan:', error);
+                }
+            }
+
+            backToMenu() {
+                try {
+                    console.log('backToMenu called');
+                    if (this.timerInterval) {
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = null;
+                    }
+                    if (this.gourmetTimer) {
+                        clearTimeout(this.gourmetTimer);
+                        this.gourmetTimer = null;
+                    }
+                    this.game.reset();
+                    this.ui.hideGameArea();
+                    this.ui.hideDanSelect();
+                    this.ui.hideTimeDisplay();
+                    this.ui.hideGameOver();
+                    this.ui.hideGourmetArea();
+                    this.ui.updateScore(0);
+                    this.ui.clearDisplay();
+                    this.ui.clearGameOverDisplay();
+                    // モード選択画面を表示
+                    this.ui.elements.MODE_SELECT?.classList.remove('hide');
+                } catch (error) {
+                    console.error('Error in backToMenu:', error);
+                }
+            }
+
+            startTimer() {
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+
+                this.timerInterval = setInterval(() => {
+                    const timeLeft = this.game.decrementTime();
+                    this.ui.updateTime(timeLeft);
+
+                    if (timeLeft === 0) {
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = null;
+                        this.endTimeAttack();
+                    }
+                }, 1000);
+            }
+
+            endTimeAttack() {
+                const defeatedCount = this.game.getEnemiesDefeated();
+                const highScore = this.getHighScore();
+                const isNewRecord = defeatedCount > highScore;
+
+                if (isNewRecord) {
+                    this.saveHighScore(defeatedCount);
+                }
+
+                this.ui.hideGameArea();
+                this.ui.hideTimeDisplay();
+                this.ui.showGameOver(defeatedCount, Math.max(highScore, defeatedCount), isNewRecord);
+            }
+
+            getHighScore() {
+                const stored = localStorage.getItem('timeattackHighScore');
+                return stored ? parseInt(stored) : 0;
+            }
+
+            saveHighScore(score) {
+                localStorage.setItem('timeattackHighScore', score.toString());
+            }
+
+            initializeBattle() {
+                const enemyHP = this.ui.initializePokemon();
+                this.game.setEnemyMaxHP(enemyHP);
+                this.ui.updateHP('player', 100);
+                this.ui.updateHP('enemy', 100);
+                this.ui.showBattleMessage('バトルがはじまる！');
+            }
+
+            startNewQuestion() {
+                try {
+                    this.ui.clearDisplay();
+                    
+                    const question = this.game.generateQuestion();
+                    this.ui.displayQuestion(question.num1, question.num2);
+                    
+                    const choices = this.game.generateChoices();
+                    this.ui.displayChoices(choices, this.handleAnswer.bind(this));
+                } catch (error) {
+                    console.error('Error in startNewQuestion:', error);
+                }
+            }
+
+            async handleAnswer(userAnswer) {
+                try {
+                    const result = this.game.checkAnswer(userAnswer);
+                    const correctAnswer = this.game.getCorrectAnswer();
+                    
+                    this.ui.highlightChoices(userAnswer, correctAnswer);
+                    
+                    if (result.isCorrect) {
+                        // プレイヤーの攻撃
+                        this.ui.animateAttack('player');
+                        await this.sleep(300);
+                        this.ui.animateDamage('enemy');
+                        this.ui.showBattleMessage(`${result.damage}のダメージ！`);
+                        this.ui.updateHP('enemy', this.game.getEnemyHPPercent());
+                        
+                        await this.sleep(500);
+                        
+                        this.ui.displayCorrectResult();
+                        this.ui.updateScore(this.game.getScore());
+                        this.ui.animateScore();
+                        
+                        // 敵を倒したかチェック
+                        if (this.game.isEnemyDefeated()) {
+                            // タイムアタックモードで敵撃破数を増加
+                            if (this.game.currentMode === GameMode.TIMEATTACK) {
+                                this.game.incrementEnemiesDefeated();
+                            }
+
+                            await this.sleep(1000);
+                            this.ui.showBattleMessage('あいてをたおした！');
+                            await this.sleep(1500);
+                            
+                            // 新しい敵を出現
+                            const newEnemyHP = this.ui.setNewEnemy();
+                            this.game.resetEnemy(newEnemyHP);
+                            this.ui.updateHP('enemy', 100);
+                            this.ui.showBattleMessage('あたらしいあいてがあらわれた！');
+                        }
+                        
+                        await this.sleep(1500);
+                    } else {
+                        // 敵の攻撃
+                        this.ui.animateAttack('enemy');
+                        await this.sleep(300);
+                        this.ui.animateDamage('player');
+                        this.ui.showBattleMessage(`${result.damage}のダメージをうけた！`);
+                        this.ui.updateHP('player', this.game.getPlayerHPPercent());
+                        
+                        await this.sleep(500);
+                        
+                        this.ui.displayIncorrectResult();
+                        this.ui.updateScore(this.game.getScore());
+                        
+                        // プレイヤーが倒れたかチェック
+                        if (this.game.isPlayerDefeated()) {
+                            await this.sleep(1000);
+                            this.ui.showBattleMessage('まけてしまった...');
+                            await this.sleep(2000);
+                            
+                            // HPをリセット
+                            this.game.resetPlayerHP();
+                            this.ui.updateHP('player', 100);
+                            this.ui.showBattleMessage('もう一どちょうせん！');
+                        }
+                        
+                        await this.sleep(2000);
+                    }
+                    
+                    this.startNewQuestion();
+                } catch (error) {
+                    console.error('Error in handleAnswer:', error);
+                }
+            }
+
+            sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            startGourmetRace() {
+                try {
+                    this.ui.updateGourmetStats(0, 0);
+                    this.ui.updatePlayerPosition(0);
+                    this.ui.updateDededePosition(0);
+                    this.spawnGourmetFood();
+                } catch (error) {
+                    console.error('Error in startGourmetRace:', error);
+                }
+            }
+
+            spawnGourmetFood() {
+                try {
+                    if (this.game.getPlayerPosition() >= 100 || this.game.getDededePosition() >= 100) {
+                        this.endGourmetRace();
+                        return;
+                    }
+
+                    const food = this.game.generateGourmetFood();
+                    this.ui.displayGourmetQuestion(food);
+                    
+                    // 選択肢を生成
+                    const choices = this.game.generateGourmetChoices();
+                    this.ui.displayGourmetChoices(choices, this.handleGourmetChoice.bind(this));
+                    
+                    // 1秒後にデデデが少し進む
+                    setTimeout(() => {
+                        if (this.game.getDededePosition() < 100) {
+                            this.game.updateDededePosition(5);
+                            this.ui.updateDededePosition(this.game.getDededePosition());
+                        }
+                    }, 1000);
+
+                    // 3秒後に答えが出ない場合は失敗とみなす
+                    this.gourmetTimer = setTimeout(() => {
+                        if (this.game.getPlayerPosition() < 100 && this.game.getDededePosition() < 100) {
+                            this.game.resetGourmetCombo();
+                            this.ui.displayGourmetResult(false, '⏰');
+                            this.ui.updateGourmetStats(
+                                this.game.getGourmetCorrect(),
+                                this.game.getGourmetCombo()
+                            );
+                            this.spawnGourmetFood();
+                        }
+                    }, 3000);
+                } catch (error) {
+                    console.error('Error in spawnGourmetFood:', error);
+                }
+            }
+
+            handleGourmetChoice(choice) {
+                try {
+                    if (this.gourmetTimer) {
+                        clearTimeout(this.gourmetTimer);
+                    }
+
+                    const food = this.game.currentFood;
+                    if (!food) return;
+
+                    const isCorrect = choice === food.answer;
+                    
+                    if (isCorrect) {
+                        this.game.incrementGourmetCorrect();
+                        this.game.updatePlayerPosition(10);
+                        this.ui.displayGourmetResult(true, '🎉');
+                        this.ui.updatePlayerPosition(this.game.getPlayerPosition());
+                    } else {
+                        this.game.resetGourmetCombo();
+                        this.ui.displayGourmetResult(false, '😢');
+                    }
+
+                    this.ui.updateGourmetStats(
+                        this.game.getGourmetCorrect(),
+                        this.game.getGourmetCombo()
+                    );
+
+                    if (this.game.getPlayerPosition() >= 100 || this.game.getDededePosition() >= 100) {
+                        this.endGourmetRace();
+                    } else {
+                        // 500ms後に次の問題をスポーン
+                        setTimeout(() => {
+                            this.spawnGourmetFood();
+                        }, 500);
+                    }
+                } catch (error) {
+                    console.error('Error in handleGourmetChoice:', error);
+                }
+            }
+
+            endGourmetRace() {
+                try {
+                    if (this.gourmetTimer) {
+                        clearTimeout(this.gourmetTimer);
+                    }
+
+                    const playerWon = this.game.getPlayerPosition() >= 100;
+                    const resultText = playerWon ? 'カービィのかち！' : 'デデデ大王のかち！';
+                    
+                    this.ui.hideGourmetArea();
+                    this.ui.showGameOver();
+                    
+                    if (this.ui.elements.RESULT) {
+                        this.ui.elements.RESULT.textContent = resultText;
+                    }
+                    
+                    // ゲームオーバースコア表示を更新
+                    if (this.ui.elements.GAME_OVER_SCORE) {
+                        this.ui.elements.GAME_OVER_SCORE.innerHTML = `<div>ただしかい</div><div class="defeated-count">${this.game.getGourmetCorrect()}</div><div>もんだい</div>`;
+                    }
+                } catch (error) {
+                    console.error('Error in endGourmetRace:', error);
+                }
+            }
+        }
+
+        // アプリケーションを起動
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new App();
+            app.init();
+        });
+    </script>
+</body>
+</html>
