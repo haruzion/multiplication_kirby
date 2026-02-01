@@ -202,15 +202,40 @@
             left: 0;
             height: 100%;
             width: 0%;
-            transition: width 0.3s ease-out;
+            transition: width 0.5s ease-out;
+            background-size: 30px 30px;
+            animation: progressStripes 0.8s linear infinite;
+        }
+
+        @keyframes progressStripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 30px 0; }
         }
 
         .player-fill {
             background: linear-gradient(90deg, #00ff00 0%, #00aa00 100%);
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.2) 0px,
+                    rgba(255, 255, 255, 0.2) 10px,
+                    transparent 10px,
+                    transparent 20px
+                ),
+                linear-gradient(90deg, #00ff00 0%, #00aa00 100%);
         }
 
         .dedede-fill {
             background: linear-gradient(90deg, #ff6666 0%, #cc0000 100%);
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.2) 0px,
+                    rgba(255, 255, 255, 0.2) 10px,
+                    transparent 10px,
+                    transparent 20px
+                ),
+                linear-gradient(90deg, #ff6666 0%, #cc0000 100%);
         }
 
         .food-lane {
@@ -853,7 +878,7 @@
         <!-- ゲーム終了画面（タイムアタック） -->
         <div class="game-over-area" id="gameOverArea">
             <div class="game-over-content">
-                <h2>ゲームオーバー！</h2>
+                <h2 id="gameOverTitle">ゲームオーバー！</h2>
                 <div class="result" id="result"></div>
                 <div class="game-over-score" id="gameOverScore">
                     <div>1ぷん間で</div>
@@ -1273,6 +1298,7 @@
                     TIME_DISPLAY: document.getElementById('timeDisplay'),
                     TIME_NUMBER: document.getElementById('timeNumber'),
                     GAME_OVER_AREA: document.getElementById('gameOverArea'),
+                    GAME_OVER_TITLE: document.getElementById('gameOverTitle'),
                     GAME_OVER_SCORE: document.getElementById('gameOverScore'),
                     DEFEATED_COUNT: document.getElementById('defeatedCount'),
                     HIGH_SCORE_SECTION: document.getElementById('highScoreSection'),
@@ -1587,8 +1613,13 @@
             }
 
             clearGameOverDisplay() {
+                if (this.elements.GAME_OVER_TITLE) {
+                    this.elements.GAME_OVER_TITLE.textContent = 'ゲームオーバー！';
+                }
                 if (this.elements.RESULT) {
                     this.elements.RESULT.textContent = '';
+                    this.elements.RESULT.style.fontSize = '';
+                    this.elements.RESULT.style.color = '';
                 }
                 if (this.elements.DEFEATED_COUNT) {
                     this.elements.DEFEATED_COUNT.textContent = '0';
@@ -1943,13 +1974,19 @@
                     }
 
                     const playerWon = this.game.getPlayerPosition() >= 100;
-                    const resultText = playerWon ? 'カービィのかち！' : 'デデデ大王のかち！';
                     
                     this.ui.hideGourmetArea();
                     this.ui.showGameOver();
                     
+                    // 勝敗に応じた表示
+                    if (this.ui.elements.GAME_OVER_TITLE) {
+                        this.ui.elements.GAME_OVER_TITLE.textContent = playerWon ? '🎉 クリア！ 🎉' : 'ざんねん...';
+                    }
+                    
                     if (this.ui.elements.RESULT) {
-                        this.ui.elements.RESULT.textContent = resultText;
+                        this.ui.elements.RESULT.textContent = playerWon ? 'カービィのかち！' : 'デデデ大王のかち！';
+                        this.ui.elements.RESULT.style.fontSize = '18px';
+                        this.ui.elements.RESULT.style.color = playerWon ? '#ffff00' : '#ff6666';
                     }
                     
                     // ゲームオーバースコア表示を更新
