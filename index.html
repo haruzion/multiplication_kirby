@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九九れんしゅう</title>
+    <title>九九グルメレース</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -57,134 +57,6 @@
             font-size: 28px;
             font-weight: 700;
             letter-spacing: 1px;
-        }
-
-        /* モード選択 */
-        .mode-select {
-            margin: 30px 0;
-        }
-
-        .mode-select.hide {
-            display: none;
-        }
-
-        .mode-select > div:first-child {
-            color: #4a5568;
-            font-size: 14px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .mode-btn {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            padding: 16px 24px;
-            margin: 10px auto;
-            border: none;
-            cursor: pointer;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-            display: block;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .mode-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
-        }
-
-        .mode-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
-        }
-
-        .time-attack-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
-        }
-
-        .time-attack-btn:hover {
-            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
-        }
-
-        .time-attack-btn:active {
-            box-shadow: 0 2px 10px rgba(245, 87, 108, 0.3);
-        }
-
-        .gourmet-btn {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            color: #2d3748;
-            box-shadow: 0 4px 15px rgba(252, 182, 159, 0.4);
-        }
-
-        .gourmet-btn:hover {
-            box-shadow: 0 8px 25px rgba(252, 182, 159, 0.5);
-        }
-
-        .gourmet-btn:active {
-            box-shadow: 0 2px 10px rgba(252, 182, 159, 0.3);
-        }
-
-        /* 段選択 */
-        .dan-select {
-            display: none;
-            margin: 30px 0;
-        }
-
-        .dan-select.show {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .dan-select > div:first-child {
-            grid-column: 1 / -1;
-            color: #4a5568;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-
-        .dan-btn {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #2d3748;
-            box-shadow: 0 3px 10px rgba(168, 237, 234, 0.3);
-            transition: all 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .dan-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(168, 237, 234, 0.4);
-        }
-
-        .dan-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(168, 237, 234, 0.3);
-        }
-
-        /* ゲームエリア */
-        .game-area {
-            display: none;
-        }
-
-        .game-area.show {
-            display: block;
         }
 
         /* グルメレースエリア */
@@ -406,164 +278,6 @@
         .back-btn:active {
             transform: translateY(0);
             box-shadow: 0 2px 5px rgba(251, 211, 141, 0.3);
-        }
-
-        /* ポケモンバトルエリア */
-        .battle-area {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 16px;
-            margin: 12px 0;
-            position: relative;
-            min-height: 180px;
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .enemy-pokemon {
-            text-align: right;
-            margin-bottom: 40px;
-        }
-
-        .player-pokemon {
-            text-align: left;
-        }
-
-        .pokemon-name {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .hp-bar-container {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 12px;
-            padding: 8px 14px;
-            margin: 5px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .hp-label {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 12px;
-            font-weight: 600;
-            color: #4a5568;
-            display: inline-block;
-            margin-right: 8px;
-        }
-
-        .hp-bar {
-            display: inline-block;
-            width: 150px;
-            height: 20px;
-            background: rgba(203, 213, 224, 0.5);
-            overflow: hidden;
-            vertical-align: middle;
-            border: none;
-            border-radius: 10px;
-        }
-
-        .hp-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
-            transition: width 0.5s ease;
-            border-radius: 10px;
-        }
-
-        .hp-fill.player {
-            background: linear-gradient(90deg, #ed8936 0%, #dd6b20 100%);
-        }
-
-        .pokemon-display {
-            font-size: 40px;
-            margin: 10px 0;
-            display: inline-block;
-            animation: pokemonIdle 2s ease-in-out infinite;
-        }
-
-        @keyframes pokemonIdle {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .pokemon-display.attack {
-            animation: pokemonAttack 0.5s ease;
-        }
-
-        @keyframes pokemonAttack {
-            0% { transform: translateX(0) scale(1); }
-            50% { transform: translateX(15px) scale(1.15); }
-            100% { transform: translateX(0) scale(1); }
-        }
-
-        .pokemon-display.damaged {
-            animation: pokemonDamage 0.5s ease;
-        }
-
-        @keyframes pokemonDamage {
-            0%, 100% { transform: translateX(0) rotate(0deg); }
-            25% { transform: translateX(-8px) rotate(-3deg); }
-            75% { transform: translateX(8px) rotate(3deg); }
-        }
-
-        /* キャラクター（ドット絵表現） */
-        .character-display {
-            font-size: 18px;
-            line-height: 1.2;
-            font-family: monospace;
-            display: inline-block;
-            margin: 10px 0;
-            color: #2d3748;
-        }
-
-        .battle-message {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 12px;
-            padding: 12px;
-            margin: 12px 0;
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            color: #2d3748;
-            min-height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* スコア */
-        .score-area {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 12px;
-            margin: 12px 0;
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(245, 87, 108, 0.3);
-        }
-
-        .score-number {
-            font-size: 32px;
-            font-weight: 700;
-            margin: 8px 0;
-        }
-
-        /* 問題 */
-        .question {
-            font-family: 'Noto Sans JP', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-            margin: 16px 0;
-            color: #2d3748;
         }
 
         /* 選択肢 */
@@ -821,9 +535,6 @@
             h1 {
                 font-size: 36px;
             }
-            .question {
-                font-size: 36px;
-            }
             .choice-btn {
                 font-size: 22px;
             }
@@ -835,85 +546,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>九九れんしゅう</h1>
+        <h1>九九グルメレース</h1>
         
-        <div class="mode-select" id="modeSelect">
-            <div>モードをえらんでね</div>
-            <button class="mode-btn" onclick="selectMode('random')">ぜんぶ (一〜九のだん)</button>
-            <button class="mode-btn" onclick="selectMode('practice')">れんしゅうモード</button>
-            <button class="mode-btn time-attack-btn" onclick="selectMode('timeattack')">⏱ タイムアタック（1ぷん）</button>
-            <button class="mode-btn gourmet-btn" onclick="selectMode('gourmet')">🍕 グルメレース</button>
-        </div>
-        
-        <div class="dan-select" id="danSelect">
-            <div>どのだんをれんしゅうする？</div>
-            <button class="dan-btn" onclick="selectDan(2)">二のだん</button>
-            <button class="dan-btn" onclick="selectDan(3)">三のだん</button>
-            <button class="dan-btn" onclick="selectDan(4)">四のだん</button>
-            <button class="dan-btn" onclick="selectDan(5)">五のだん</button>
-            <button class="dan-btn" onclick="selectDan(6)">六のだん</button>
-            <button class="dan-btn" onclick="selectDan(7)">七のだん</button>
-            <button class="dan-btn" onclick="selectDan(8)">八のだん</button>
-            <button class="dan-btn" onclick="selectDan(9)">九のだん</button>
-        </div>
-        
-        <div class="game-area" id="gameArea">
-            <button class="back-btn" onclick="backToMenu()">← メニューにもどる</button>
-            
-            <!-- タイムアタック用の時間表示 -->
-            <div class="time-display" id="timeDisplay" style="display: none;">
-                <div class="time-label">のこり</div>
-                <div class="time-number" id="timeNumber">60</div>
-                <div>びょう</div>
-            </div>
-            
-            <!-- ポケモンバトルエリア -->
-            <div class="battle-area">
-                <div class="enemy-pokemon">
-                    <div class="pokemon-name" id="enemyName">あいてのキャラ</div>
-                    <div class="hp-bar-container">
-                        <div class="hp-label">HP</div>
-                        <div class="hp-bar">
-                            <div class="hp-fill" id="enemyHP" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    <div class="pokemon-display" id="enemyDisplay">�🟥🟥🟥<br>🟥⬜⬜🟥<br>🟥🟥🟥🟥<br>🟥🟥🟥🟥</div>
-                </div>
-                
-                <div class="player-pokemon">
-                    <div class="pokemon-name" id="playerName">あなたのキャラ</div>
-                    <div class="hp-bar-container">
-                        <div class="hp-label">HP</div>
-                        <div class="hp-bar">
-                            <div class="hp-fill player" id="playerHP" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    <div class="pokemon-display" id="playerDisplay">🟥🟥🟥🟥<br>🟥⬜⬜🟥<br>🟥🟥🟥🟥<br>🟥🟥🟥🟥</div>
-                </div>
-            </div>
-            
-            <div class="battle-message" id="battleMessage">バトルがはじまる！</div>
-            
-            <!-- スコア表示 -->
-            <div class="score-area">
-                <div>れんぞくただしかい</div>
-                <div class="score-number" id="score">0</div>
-            </div>
-            
-            <!-- 問題表示 -->
-            <div class="question" id="question">問題</div>
-            
-            <!-- 選択肢 -->
-            <div class="choices" id="choices"></div>
-            
-            <!-- 結果表示 -->
-            <div class="emoji" id="emoji"></div>
-            <div class="result" id="result"></div>
-        </div>
-
         <!-- グルメレースエリア -->
         <div class="gourmet-area" id="gourmetArea">
-            <button class="back-btn" onclick="backToMenu()">← メニューにもどる</button>
             
             <!-- レース画面 -->
             <div class="race-container">
@@ -982,7 +618,7 @@
                 <div class="is-new-record" id="isNewRecord" style="display: none;">
                     🎉 あたらしいきろく！🎉
                 </div>
-                <button class="game-over-btn" onclick="backToMenu()">メニューにもどる</button>
+                <button class="game-over-btn" onclick="backToMenu()">もう一どあそぶ</button>
             </div>
         </div>
     </div>
@@ -1331,21 +967,6 @@
         ];
 
         // ポケモン定義
-        const PLAYER_POKEMONS = [
-            { name: 'カービィ', type: 'ピンク', hp: 100, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
-            { name: 'メタナイト', type: 'くろ', hp: 120, dotImage: '⬛⬛⬛⬛\n⬛🟦🟦⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛' },
-            { name: 'デデデ大王', type: 'ベニ', hp: 140, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
-            { name: 'ワドルディ', type: 'あか', hp: 90, dotImage: '🟨🟨🟨🟨\n🟨⬜⬜🟨\n🟨🟨🟨🟨\n🟨🟨🟨🟨' }
-        ];
-
-        const ENEMY_POKEMONS = [
-            { name: 'カービィ', type: 'ピンク', hp: 100, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
-            { name: 'メタナイト', type: 'くろ', hp: 130, dotImage: '⬛⬛⬛⬛\n⬛🟦🟦⬛\n⬛⬛⬛⬛\n⬛⬛⬛⬛' },
-            { name: 'デデデ大王', type: 'ベニ', hp: 150, dotImage: '🟥🟥🟥🟥\n🟥⬜⬜🟥\n🟥🟥🟥🟥\n🟥🟥🟥🟥' },
-            { name: 'ワドルディ', type: 'あか', hp: 110, dotImage: '🟨🟨🟨🟨\n🟨⬜⬜🟨\n🟨🟨🟨🟨\n🟨🟨🟨🟨' },
-            { name: 'ワドルディ（緑）', type: 'みどり', hp: 100, dotImage: '🟩🟩🟩🟩\n🟩⬜⬜🟩\n🟩🟩🟩🟩\n🟩🟩🟩🟩' }
-        ];
-
         // グルメレース用の食べ物定義
         const GOURMET_FOODS = [
             { name: 'マキシムトマト', point: 5 },
@@ -1364,29 +985,10 @@
         class UIManager {
             constructor() {
                 this.elements = this.getElements();
-                this.currentPlayerPokemon = null;
-                this.currentEnemyPokemon = null;
             }
 
             getElements() {
                 return {
-                    MODE_SELECT: document.getElementById('modeSelect'),
-                    DAN_SELECT: document.getElementById('danSelect'),
-                    GAME_AREA: document.getElementById('gameArea'),
-                    QUESTION: document.getElementById('question'),
-                    CHOICES: document.getElementById('choices'),
-                    SCORE: document.getElementById('score'),
-                    EMOJI: document.getElementById('emoji'),
-                    RESULT: document.getElementById('result'),
-                    PLAYER_DISPLAY: document.getElementById('playerDisplay'),
-                    ENEMY_DISPLAY: document.getElementById('enemyDisplay'),
-                    PLAYER_HP: document.getElementById('playerHP'),
-                    ENEMY_HP: document.getElementById('enemyHP'),
-                    PLAYER_NAME: document.getElementById('playerName'),
-                    ENEMY_NAME: document.getElementById('enemyName'),
-                    BATTLE_MESSAGE: document.getElementById('battleMessage'),
-                    TIME_DISPLAY: document.getElementById('timeDisplay'),
-                    TIME_NUMBER: document.getElementById('timeNumber'),
                     GAME_OVER_AREA: document.getElementById('gameOverArea'),
                     GAME_OVER_TITLE: document.getElementById('gameOverTitle'),
                     GAME_OVER_SCORE: document.getElementById('gameOverScore'),
@@ -1409,167 +1011,6 @@
                 };
             }
 
-            hideModeSelect() {
-                this.elements.MODE_SELECT?.classList.add('hide');
-            }
-
-            showDanSelect() {
-                this.elements.DAN_SELECT?.classList.add('show');
-            }
-
-            hideDanSelect() {
-                this.elements.DAN_SELECT?.classList.remove('show');
-            }
-
-            showGameArea() {
-                this.elements.GAME_AREA?.classList.add('show');
-            }
-
-            hideGameArea() {
-                this.elements.GAME_AREA?.classList.remove('show');
-            }
-
-            updateScore(score) {
-                if (this.elements.SCORE) {
-                    this.elements.SCORE.textContent = score;
-                }
-            }
-
-            animateScore() {
-                const scoreElem = this.elements.SCORE;
-                if (scoreElem) {
-                    scoreElem.classList.add('bounce');
-                    setTimeout(() => {
-                        scoreElem.classList.remove('bounce');
-                    }, 500);
-                }
-            }
-
-            displayQuestion(num1, num2) {
-                if (this.elements.QUESTION) {
-                    this.elements.QUESTION.textContent = `${num1} × ${num2} = ?`;
-                }
-            }
-
-            displayChoices(choices, onSelect) {
-                const choicesDiv = this.elements.CHOICES;
-                if (!choicesDiv) return;
-
-                choicesDiv.innerHTML = '';
-                
-                choices.forEach(choice => {
-                    const btn = document.createElement('button');
-                    btn.className = 'choice-btn';
-                    btn.textContent = choice;
-                    btn.onclick = () => onSelect(choice);
-                    choicesDiv.appendChild(btn);
-                });
-            }
-
-            displayCorrectResult() {
-                const praise = getRandomElement(PRAISE_WORDS);
-                
-                if (this.elements.EMOJI) {
-                    this.elements.EMOJI.textContent = praise.emoji;
-                }
-                
-                if (this.elements.RESULT) {
-                    this.elements.RESULT.textContent = praise.text;
-                    this.elements.RESULT.className = `result correct bounce`;
-                }
-            }
-
-            displayIncorrectResult() {
-                const encourage = getRandomElement(ENCOURAGE_WORDS);
-                
-                if (this.elements.EMOJI) {
-                    this.elements.EMOJI.textContent = encourage.emoji;
-                }
-                
-                if (this.elements.RESULT) {
-                    this.elements.RESULT.textContent = encourage.text;
-                    this.elements.RESULT.className = `result incorrect shake`;
-                }
-            }
-
-            highlightChoices(userAnswer, correctAnswer) {
-                const buttons = document.querySelectorAll('.choice-btn');
-                
-                buttons.forEach(btn => {
-                    btn.onclick = null;
-                    btn.style.cursor = 'default';
-                    
-                    const value = parseInt(btn.textContent);
-                    if (value === correctAnswer) {
-                        btn.classList.add('correct');
-                    } else if (value === userAnswer) {
-                        btn.classList.add('incorrect');
-                    }
-                });
-            }
-
-            initializePokemon() {
-                this.currentPlayerPokemon = getRandomElement(PLAYER_POKEMONS);
-                this.currentEnemyPokemon = getRandomElement(ENEMY_POKEMONS);
-                
-                if (this.elements.PLAYER_DISPLAY) {
-                    this.elements.PLAYER_DISPLAY.innerHTML = `<div class="character-display">${this.currentPlayerPokemon.dotImage}</div>`;
-                }
-                if (this.elements.ENEMY_DISPLAY) {
-                    this.elements.ENEMY_DISPLAY.innerHTML = `<div class="character-display">${this.currentEnemyPokemon.dotImage}</div>`;
-                }
-                if (this.elements.PLAYER_NAME) {
-                    this.elements.PLAYER_NAME.textContent = this.currentPlayerPokemon.name;
-                }
-                if (this.elements.ENEMY_NAME) {
-                    this.elements.ENEMY_NAME.textContent = this.currentEnemyPokemon.name;
-                }
-                
-                return this.currentEnemyPokemon.hp;
-            }
-
-            updateHP(target, hpPercent) {
-                const hpElement = target === 'player' ? this.elements.PLAYER_HP : this.elements.ENEMY_HP;
-                if (hpElement) {
-                    hpElement.style.width = `${Math.max(0, hpPercent)}%`;
-                }
-            }
-
-            showBattleMessage(message) {
-                if (this.elements.BATTLE_MESSAGE) {
-                    this.elements.BATTLE_MESSAGE.textContent = message;
-                }
-            }
-
-            animateAttack(attacker) {
-                const element = attacker === 'player' ? this.elements.PLAYER_DISPLAY : this.elements.ENEMY_DISPLAY;
-                if (element) {
-                    element.classList.add('attack');
-                    setTimeout(() => element.classList.remove('attack'), 500);
-                }
-            }
-
-            animateDamage(target) {
-                const element = target === 'player' ? this.elements.PLAYER_DISPLAY : this.elements.ENEMY_DISPLAY;
-                if (element) {
-                    element.classList.add('damaged');
-                    setTimeout(() => element.classList.remove('damaged'), 500);
-                }
-            }
-
-            setNewEnemy() {
-                this.currentEnemyPokemon = getRandomElement(ENEMY_POKEMONS);
-                
-                if (this.elements.ENEMY_DISPLAY) {
-                    this.elements.ENEMY_DISPLAY.innerHTML = `<div class="character-display">${this.currentEnemyPokemon.dotImage}</div>`;
-                }
-                if (this.elements.ENEMY_NAME) {
-                    this.elements.ENEMY_NAME.textContent = this.currentEnemyPokemon.name;
-                }
-                
-                return this.currentEnemyPokemon.hp;
-            }
-
             clearDisplay() {
                 if (this.elements.RESULT) {
                     this.elements.RESULT.textContent = '';
@@ -1577,24 +1018,6 @@
                 }
                 if (this.elements.EMOJI) {
                     this.elements.EMOJI.textContent = '';
-                }
-            }
-
-            showTimeDisplay() {
-                if (this.elements.TIME_DISPLAY) {
-                    this.elements.TIME_DISPLAY.style.display = 'block';
-                }
-            }
-
-            hideTimeDisplay() {
-                if (this.elements.TIME_DISPLAY) {
-                    this.elements.TIME_DISPLAY.style.display = 'none';
-                }
-            }
-
-            updateTime(timeLeft) {
-                if (this.elements.TIME_NUMBER) {
-                    this.elements.TIME_NUMBER.textContent = timeLeft;
                 }
             }
 
@@ -1737,230 +1160,29 @@
             }
 
             init() {
-                window.selectMode = this.selectMode.bind(this);
-                window.selectDan = this.selectDan.bind(this);
                 window.backToMenu = this.backToMenu.bind(this);
-                
-                // 初期画面表示設定
-                this.ui.hideGameArea();
-                this.ui.hideDanSelect();
-                this.ui.hideTimeDisplay();
-                this.ui.hideGameOver();
-                this.ui.hideGourmetArea();
-                if (this.ui.elements.MODE_SELECT) {
-                    this.ui.elements.MODE_SELECT.classList.remove('hide');
-                }
-            }
-
-            selectMode(mode) {
-                try {
-                    console.log('selectMode called with mode:', mode);
-                    this.game.setMode(mode);
-                    this.ui.updateScore(0);
-                    this.ui.hideDanSelect();
-                    this.ui.hideModeSelect();
-                    this.ui.hideTimeDisplay();
-                    this.ui.hideGameOver();
-                    
-                    if (mode === GameMode.RANDOM) {
-                        this.game.practiceDan = null;
-                        this.ui.showGameArea();
-                        this.initializeBattle();
-                        this.startNewQuestion();
-                    } else if (mode === GameMode.PRACTICE) {
-                        this.ui.showDanSelect();
-                        this.ui.hideGameArea();
-                    } else if (mode === GameMode.TIMEATTACK) {
-                        this.game.practiceDan = null;
-                        this.ui.showGameArea();
-                        this.ui.showTimeDisplay();
-                        this.initializeBattle();
-                        this.startNewQuestion();
-                        this.startTimer();
-                    } else if (mode === GameMode.GOURMET) {
-                        this.ui.hideGameArea();
-                        this.ui.showGourmetArea();
-                        this.startGourmetRace();
-                    }
-                } catch (error) {
-                    console.error('Error in selectMode:', error);
-                }
-            }
-
-            selectDan(dan) {
-                try {
-                    console.log('selectDan called with dan:', dan);
-                    this.game.setPracticeDan(dan);
-                    this.ui.updateScore(0);
-                    this.ui.hideDanSelect();
-                    this.ui.showGameArea();
-                    this.initializeBattle();
-                    this.startNewQuestion();
-                } catch (error) {
-                    console.error('Error in selectDan:', error);
-                }
+                // 起動時に直接グルメレースを開始
+                this.game.setMode('gourmet');
+                this.ui.showGourmetArea();
+                this.startGourmetRace();
             }
 
             backToMenu() {
                 try {
-                    console.log('backToMenu called');
-                    if (this.timerInterval) {
-                        clearInterval(this.timerInterval);
-                        this.timerInterval = null;
-                    }
+                    console.log('backToMenu called - restarting Gourmet Race');
                     if (this.gourmetTimer) {
                         clearTimeout(this.gourmetTimer);
                         this.gourmetTimer = null;
                     }
                     this.game.reset();
-                    this.ui.hideGameArea();
-                    this.ui.hideDanSelect();
-                    this.ui.hideTimeDisplay();
                     this.ui.hideGameOver();
-                    this.ui.hideGourmetArea();
-                    this.ui.updateScore(0);
-                    this.ui.clearDisplay();
                     this.ui.clearGameOverDisplay();
-                    // モード選択画面を表示
-                    this.ui.elements.MODE_SELECT?.classList.remove('hide');
+                    // グルメレースを再開
+                    this.game.setMode('gourmet');
+                    this.ui.showGourmetArea();
+                    this.startGourmetRace();
                 } catch (error) {
                     console.error('Error in backToMenu:', error);
-                }
-            }
-
-            startTimer() {
-                if (this.timerInterval) {
-                    clearInterval(this.timerInterval);
-                }
-
-                this.timerInterval = setInterval(() => {
-                    const timeLeft = this.game.decrementTime();
-                    this.ui.updateTime(timeLeft);
-
-                    if (timeLeft === 0) {
-                        clearInterval(this.timerInterval);
-                        this.timerInterval = null;
-                        this.endTimeAttack();
-                    }
-                }, 1000);
-            }
-
-            endTimeAttack() {
-                const defeatedCount = this.game.getEnemiesDefeated();
-                const highScore = this.getHighScore();
-                const isNewRecord = defeatedCount > highScore;
-
-                if (isNewRecord) {
-                    this.saveHighScore(defeatedCount);
-                }
-
-                this.ui.hideGameArea();
-                this.ui.hideTimeDisplay();
-                this.ui.showGameOver(defeatedCount, Math.max(highScore, defeatedCount), isNewRecord);
-            }
-
-            getHighScore() {
-                const stored = localStorage.getItem('timeattackHighScore');
-                return stored ? parseInt(stored) : 0;
-            }
-
-            saveHighScore(score) {
-                localStorage.setItem('timeattackHighScore', score.toString());
-            }
-
-            initializeBattle() {
-                const enemyHP = this.ui.initializePokemon();
-                this.game.setEnemyMaxHP(enemyHP);
-                this.ui.updateHP('player', 100);
-                this.ui.updateHP('enemy', 100);
-                this.ui.showBattleMessage('バトルがはじまる！');
-            }
-
-            startNewQuestion() {
-                try {
-                    this.ui.clearDisplay();
-                    
-                    const question = this.game.generateQuestion();
-                    this.ui.displayQuestion(question.num1, question.num2);
-                    
-                    const choices = this.game.generateChoices();
-                    this.ui.displayChoices(choices, this.handleAnswer.bind(this));
-                } catch (error) {
-                    console.error('Error in startNewQuestion:', error);
-                }
-            }
-
-            async handleAnswer(userAnswer) {
-                try {
-                    const result = this.game.checkAnswer(userAnswer);
-                    const correctAnswer = this.game.getCorrectAnswer();
-                    
-                    this.ui.highlightChoices(userAnswer, correctAnswer);
-                    
-                    if (result.isCorrect) {
-                        // プレイヤーの攻撃
-                        this.ui.animateAttack('player');
-                        await this.sleep(300);
-                        this.ui.animateDamage('enemy');
-                        this.ui.showBattleMessage(`${result.damage}のダメージ！`);
-                        this.ui.updateHP('enemy', this.game.getEnemyHPPercent());
-                        
-                        await this.sleep(500);
-                        
-                        this.ui.displayCorrectResult();
-                        this.ui.updateScore(this.game.getScore());
-                        this.ui.animateScore();
-                        
-                        // 敵を倒したかチェック
-                        if (this.game.isEnemyDefeated()) {
-                            // タイムアタックモードで敵撃破数を増加
-                            if (this.game.currentMode === GameMode.TIMEATTACK) {
-                                this.game.incrementEnemiesDefeated();
-                            }
-
-                            await this.sleep(1000);
-                            this.ui.showBattleMessage('あいてをたおした！');
-                            await this.sleep(1500);
-                            
-                            // 新しい敵を出現
-                            const newEnemyHP = this.ui.setNewEnemy();
-                            this.game.resetEnemy(newEnemyHP);
-                            this.ui.updateHP('enemy', 100);
-                            this.ui.showBattleMessage('あたらしいあいてがあらわれた！');
-                        }
-                        
-                        await this.sleep(1500);
-                    } else {
-                        // 敵の攻撃
-                        this.ui.animateAttack('enemy');
-                        await this.sleep(300);
-                        this.ui.animateDamage('player');
-                        this.ui.showBattleMessage(`${result.damage}のダメージをうけた！`);
-                        this.ui.updateHP('player', this.game.getPlayerHPPercent());
-                        
-                        await this.sleep(500);
-                        
-                        this.ui.displayIncorrectResult();
-                        this.ui.updateScore(this.game.getScore());
-                        
-                        // プレイヤーが倒れたかチェック
-                        if (this.game.isPlayerDefeated()) {
-                            await this.sleep(1000);
-                            this.ui.showBattleMessage('まけてしまった...');
-                            await this.sleep(2000);
-                            
-                            // HPをリセット
-                            this.game.resetPlayerHP();
-                            this.ui.updateHP('player', 100);
-                            this.ui.showBattleMessage('もう一どちょうせん！');
-                        }
-                        
-                        await this.sleep(2000);
-                    }
-                    
-                    this.startNewQuestion();
-                } catch (error) {
-                    console.error('Error in handleAnswer:', error);
                 }
             }
 
